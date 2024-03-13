@@ -1,4 +1,5 @@
 'use client';
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -38,9 +39,9 @@ export default function Navbar() {
                     id="navbarSupportedContent1"
                 >
                     {/* Logo */}
-                    <a
+                    <Link
                         className="mb-4 me-5 ms-2 mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-                        href="#"
+                        href="/"
                     >
                         <img
                             src="https://tecdn.b-cdn.net/img/logo/te-transparent-noshadows.webp"
@@ -48,17 +49,17 @@ export default function Navbar() {
                             alt="TE Logo"
                             loading="lazy"
                         />
-                    </a>
+                    </Link>
                     {/* Left navigation links */}
                     <ul className="list-style-none me-auto flex flex-col ps-0 lg:flex-row">
                         {/* Dashboard link */}
                         <li className="mb-4 lg:mb-0 lg:pe-2">
-                            <a
+                            <Link
                                 className="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
-                                href="#"
+                                href="/chart"
                             >
-                                Dashboard
-                            </a>
+                                Charts
+                            </Link>
                         </li>
                         {/* Team link */}
                         <li className="mb-4 lg:mb-0 lg:pe-2">
