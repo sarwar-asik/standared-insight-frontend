@@ -45,7 +45,7 @@ export default function Navbar() {
                     >
                         <img
                             src="https://tecdn.b-cdn.net/img/logo/te-transparent-noshadows.webp"
-                            style={{ height: "15px" }}
+                            style={{ height: "24px" }}
                             alt="TE Logo"
                             loading="lazy"
                         />
