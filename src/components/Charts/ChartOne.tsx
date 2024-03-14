@@ -5,7 +5,8 @@ import { getChartData } from './data';
 
 
 
-export default function ChartOne({ questionData, answerData }: { questionData: any[], answerData: any }) {
+
+export default function ChartOne({ questionData, answerData }: { questionData: any, answerData: any }) {
 
     // console.log(questionData, answerData)
 

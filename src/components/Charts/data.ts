@@ -3,7 +3,7 @@ import { answersData } from "@/db/answer";
 import { questionsData } from "@/db/question";
 
 interface ChartData {
-  labels: string[];
+  labels: any;
   datasets: any[];
 }
 
