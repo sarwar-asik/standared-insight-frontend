@@ -4,9 +4,47 @@ import Chart from 'chart.js/auto';
 import { getChartData } from './data';
 
 
+const SERVER_URL = 'https://standared-insight-server-qv0oamc2a-sarwar-asik.vercel.app/';
 
 
-export default function ChartOne({ questionData, answerData }: { questionData: any, answerData: any }) {
+async function fetchData(url: string) {
+    const res = await fetch(url);
+    if (!res.ok) {
+        throw new Error(`Failed to fetch data from ${url}`);
+    }
+    return res.json();
+}
+export default function ChartOne() {
+
+
+    const [questionData, setQuestionData] = useState([]);
+    const [answerData, setAnswerData] = useState([]);
+    const [error, setError] = useState<any>(null);
+
+    // Fetch data using useEffect
+    useEffect(() => {
+        const fetchQuestionData = async () => {
+            try {
+                const data = await fetchData(`${SERVER_URL}/api/v1/question`);
+                setQuestionData(data);
+            } catch (error) {
+                setError(error);
+            }
+        };
+
+        const fetchAnswerData = async () => {
+            try {
+                const data = await fetchData(`${SERVER_URL}/api/v1/answer`);
+                setAnswerData(data);
+            } catch (error) {
+                setError(error);
+            }
+        };
+
+        fetchQuestionData();
+        fetchAnswerData();
+    }, []); // Empty dependency array ensures data is fetched only once on component mount
+
 
     // console.log(questionData, answerData)
 
@@ -45,6 +83,13 @@ export default function ChartOne({ questionData, answerData }: { questionData: a
         }
     }, [chartData]);
 
+    if (error) {
+        return <div>Error fetching data: {error.message}</div>;
+    }
+
+    if (!questionData || !answerData) {
+        return <div>Loading data...</div>;
+    }
 
     return (
         <div>

@@ -11,12 +11,11 @@ async function fetchData(url: string) {
 }
 
 const ChartPage = async () => {
-    const questionData = await fetchData(`'https://standared-insight-server-qv0oamc2a-sarwar-asik.vercel.app/api/v1/question`);
-    const answerData = await fetchData(`'https://standared-insight-server-qv0oamc2a-sarwar-asik.vercel.app/api/v1/answer`); // Corrected call
+  
 
     return (
         <div>
-            <ChartOne questionData={questionData} answerData={answerData} />
+            <ChartOne  />
         </div>
     )
 }
