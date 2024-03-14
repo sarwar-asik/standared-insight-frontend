@@ -4,7 +4,7 @@ export default function Footer() {
     return (
         <div>
             {/* footer */}
-            <div className="bg-black rounded-tr-[158px] relative pt-[66px] mt-[92px] w-full">
+            <div className="bg-neutral-700 rounded-tr-[158px] relative pt-[66px] mt-[92px] w-full">
                 <div className="w-full flex md:gap-4 gap-8 sm:justify-between flex-col md:flex-row max-w-screen-2xl mx-auto pb-[76px] sm:pl-12 sm:pr-12 px-5 lg:pr-[152px]">
                     <div className="flex flex-col gap-4 justify-start">
                         <h1 className="text-4xl text-white font-playFairDisplay tracking-[0.01] w-fit cursor-pointer">
