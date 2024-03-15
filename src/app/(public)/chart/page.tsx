@@ -1,4 +1,4 @@
-import ChartOne from '@/components/Charts/ChartOne'
+import ChartOne from '@/components/Charts/gendarChart/GenderChart'
 import dynamic from 'next/dynamic';
 import React from 'react'
 
@@ -11,11 +11,11 @@ async function fetchData(url: string) {
 }
 
 const ChartPage = async () => {
-  
+
 
     return (
         <div>
-            <ChartOne  />
+            <ChartOne />
         </div>
     )
 }

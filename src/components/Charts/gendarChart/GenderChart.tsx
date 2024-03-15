@@ -1,12 +1,14 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
-import { getChartData } from './data';
+import { getChartData } from '../chartData/genderChartData';
 import axios from 'axios';
+import useFetchData from '@/hooks/useFetchData';
 
 
 // const SERVER_URL = 'https://standared-insight-server-ev51donrk-sarwar-asik.vercel.app';
 
+// const SERVER_URL = 'https://standared-insight-server.vercel.app';
 const SERVER_URL = 'http://localhost:5000';
 
 async function fetchData(url: string) {
@@ -20,42 +22,13 @@ async function fetchData(url: string) {
         throw new Error(`Failed to fetch data from ${url}. Error: ${error.message}`);
     }
 }
-export default function ChartOne() {
+export default function GenderChart() {
 
 
-    const [questionData, setQuestionData] = useState([]);
-    const [answerData, setAnswerData] = useState([]);
-    const [error, setError] = useState<any>(null);
 
-    // console.log(questionData, answerData)
+    const { data: questionData, loading: questionLoading, error: questionError } = useFetchData({ url: `${SERVER_URL}/api/v1/question` });
+    const { data: answerData, loading: answerLoading, error: answerError } = useFetchData({ url: `${SERVER_URL}/api/v1/answer` });
 
-    // ! for fetching data of question and answer
-    useEffect(() => {
-        const fetchQuestionData = async () => {
-            try {
-                const data = await fetchData(`${SERVER_URL}/api/v1/question`);
-                console.log(data)
-                setQuestionData(data);
-            } catch (error) {
-                console.log('here', error)
-                setError(error);
-            }
-        };
-
-        const fetchAnswerData = async () => {
-            try {
-                const data = await fetchData(`${SERVER_URL}/api/v1/answer`);
-                console.log(data)
-                setAnswerData(data);
-            } catch (error) {
-                console.log(error)
-                setError(error);
-            }
-        };
-
-        fetchQuestionData();
-        fetchAnswerData();
-    }, []); // Empty dependency array ensures data is fetched only once on component mount
 
 
     // console.log(questionData, answerData)
@@ -89,12 +62,11 @@ export default function ChartOne() {
 
             const context = chartRef.current.getContext("2d") as any
 
-
-
             const newChart = new Chart(context, {
                 type: "bar",
                 data: chartData,
-                options: {
+                options:
+                {
                     plugins: {
                         title: {
                             display: true,
@@ -123,21 +95,18 @@ export default function ChartOne() {
 
 
 
-    if (error) {
-        return <div className='text-center'>Error fetching data: {error.message}</div>;
-    }
-
     if (!questionData || !answerData) {
         return <div className='text-center'>Loading data...</div>;
     }
 
     return (
         <div className='text-center container mx-auto'>
-            <h2 >Gender and Age Chart</h2>
-            <div className="max-h-[50rem]  mx-auto">
+            <h2 className='text-2xl font-semibold'>Gender and Age Chart</h2>
+            <div className="max-h-[50rem] bg-red-40 mx-auto">
                 <canvas ref={chartRef} style={{
                     margin: "auto",
-                    height: "40rem"
+                    height: "40rem",
+                    minWidth: "70%"
                 }} />
             </div>
         </div>
