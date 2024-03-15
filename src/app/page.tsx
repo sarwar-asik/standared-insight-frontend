@@ -1,3 +1,5 @@
+import FinalChart from "@/components/Charts/FinalChart/FinalChart";
+import LocationChart from "@/components/Charts/LocationChart/LocationChart";
 import GenderChart from "@/components/Charts/gendarChart/GenderChart";
 import HeaderPage from "@/components/Home/Header";
 import Testimonial from "@/components/Home/Testimonial";
@@ -10,6 +12,8 @@ export default function Home() {
     <main className="">
       <HeaderPage />
       <GenderChart />
+      <LocationChart />
+      <FinalChart />
       <Testimonial />
     </main >
   );

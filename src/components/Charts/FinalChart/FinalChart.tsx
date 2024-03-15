@@ -4,6 +4,7 @@ import Chart from 'chart.js/auto';
 import { getChartData } from '../chartData/genderChartData';
 import axios from 'axios';
 import useFetchData from '@/hooks/useFetchData';
+import { answersData } from '@/db/answer';
 
 
 // const SERVER_URL = 'https://standared-insight-server-ev51donrk-sarwar-asik.vercel.app';
@@ -11,12 +12,15 @@ import useFetchData from '@/hooks/useFetchData';
 const SERVER_URL = 'https://standared-insight-server.vercel.app';
 // const SERVER_URL = 'http://localhost:5000';
 
-export default function GenderChart() {
+
+export default function FinalChart() {
 
 
 
     const { data: questionData, loading: questionLoading, error: questionError } = useFetchData({ url: `${SERVER_URL}/api/v1/question` });
     const { data: answerData, loading: answerLoading, error: answerError } = useFetchData({ url: `${SERVER_URL}/api/v1/answer` });
+
+
 
 
 
@@ -27,51 +31,59 @@ export default function GenderChart() {
     const chartInstanceRef = useRef<Chart | null>(null);
 
 
+    const [FinalData, setFinalData] = useState<any[]>([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await getChartData({ questionData, answerData });
-                setChartData(data);
-            } catch (error) {
+        const getFinalData = () => {
 
-                console.error('Error fetching chart data:', error);
-            }
+
+            const FinalAnswers = answersData?.filter((answer: any) => answer.questionIndex === 4);
+
+
+
+            setFinalData(FinalAnswers);
         };
 
-        fetchData();
-    }, [answerData, questionData]);
+        getFinalData();
+    }, [answerData?.data]);
 
-    console.log(chartData, 'chartData')
+
+    // console.log(FinalData)
+
+
+
+
+    // console.log(chartData, 'chartData')
+
+
     useEffect(() => {
         if (chartRef.current) {
             if (chartRef.current.chart) {
                 chartRef.current.chart.destroy();
             }
 
+            const labels = FinalData.map((answer) => answer.answer);
+            const counts = FinalData.map((answer) => answer.submissionId);
+
             const context = chartRef.current.getContext("2d") as any
 
             const newChart = new Chart(context, {
                 type: "bar",
-                data: chartData,
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'Count',
+                            data: counts,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1,
+                        },
+                    ],
+                },
                 options:
                 {
-                    indexAxis: 'y',
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: "Age and Gender Chart",
-                        },
-                    },
-                    layout: {
-                        padding: 40,
-
-                    },
-                    // responsive: true
                     scales: {
-                        x: {
-                            type: "category",
-                        },
                         y: {
                             beginAtZero: true,
                         },
@@ -81,17 +93,17 @@ export default function GenderChart() {
 
             chartRef.current.chart = newChart;
         }
-    }, [chartData]);
+    }, [FinalData]);
 
 
 
     if (!questionData || !answerData) {
-        return <div className='text-center'>Loading Gender  data...</div>;
+        return <div className='text-center'>Loading Final data...</div>;
     }
 
     return (
         <div className='text-center container mx-auto'>
-            <h2 className='text-3xl text-slate-700 font-semibold'>Gender and Age Chart</h2>
+            <h2 className='text-3xl text-slate-700 font-semibold'>Final Chart</h2>
             <div className="max-h-[50rem] bg-red-40 mx-auto">
                 <canvas ref={chartRef} style={{
                     margin: "auto",

@@ -11,10 +11,10 @@ export const getChartData = ({
   questionData,
   answerData,
 }: {
-  questionData: any[];
+  questionData: any;
   answerData: any;
 }): Promise<ChartData> => {
-  console.log(questionData, answerData)
+  console.log(questionData, answerData);
   return new Promise((resolve) => {
     const ageData = {
       labels: ["0-20", "21-40", "41-60", "61+"],
@@ -22,9 +22,9 @@ export const getChartData = ({
       femaleCount: [0, 0, 0, 0],
     };
 
-    answersData.slice(0, 50).forEach((answer) => {
-      const question = questionsData.find(
-        (q) => q.questionIndex === answer.questionIndex
+    answerData?.data?.forEach((answer: any) => {
+      const question = questionData?.data?.find(
+        (q: any) => q.questionIndex === answer.questionIndex
       );
       if (question && question.question === "@How old are you?") {
         const ageGroup = parseInt(answer.answer);
@@ -80,6 +80,7 @@ export const getChartData = ({
       labels: ageData.labels,
       datasets: [
         {
+          axis: "y",
           label: "Male",
           data: ageData.maleCount,
           backgroundColor: "rgba(54, 162, 235, 0.5)",
@@ -87,6 +88,7 @@ export const getChartData = ({
           borderWidth: 1,
         },
         {
+          axis: "y",
           label: "Female",
           data: ageData.femaleCount,
           backgroundColor: "rgba(255, 99, 132, 0.5)",
