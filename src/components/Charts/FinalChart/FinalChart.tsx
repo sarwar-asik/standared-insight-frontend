@@ -37,7 +37,7 @@ export default function FinalChart() {
         const getFinalData = () => {
 
 
-            const FinalAnswers = answersData?.filter((answer: any) => answer.questionIndex === 4);
+            const FinalAnswers = answerData?.data?.filter((answer: any) => answer.questionIndex === 4);
 
 
 
@@ -62,8 +62,8 @@ export default function FinalChart() {
                 chartRef.current.chart.destroy();
             }
 
-            const labels = FinalData.map((answer) => answer.answer);
-            const counts = FinalData.map((answer) => answer.submissionId);
+            const labels = FinalData.map((answer) => answer.answer) || ['36-40','40-45']
+            const counts = FinalData.map((answer) => answer.submissionId) || ['1','2','3']
 
             const context = chartRef.current.getContext("2d") as any
 
@@ -107,7 +107,7 @@ export default function FinalChart() {
             <div className="max-h-[50rem] bg-red-40 mx-auto">
                 <canvas ref={chartRef} style={{
                     margin: "auto",
-                    height: "38rem",
+                    height: "30rem",
                     minWidth: "46rem"
                 }} />
             </div>
